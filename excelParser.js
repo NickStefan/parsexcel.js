@@ -7,7 +7,8 @@ var Promise = require('node-promise'),
 function extractFiles(path) {
 	var unzip = require('unzip'),
 		deferred = defer();
-
+  
+  // desired files
 	var files = {
 		'xl/worksheets/sheet1.xml': {
 			deferred: defer()
@@ -28,9 +29,6 @@ function extractFiles(path) {
 		.on('error', function(err) {
 			deferred.reject(err);
 		})
-		.on('end', function(){
-			deferred.resolve();
-		})
 		.on('entry', function(entry) {
 			if (files[entry.path]) {
 				var contents = '';
@@ -43,11 +41,14 @@ function extractFiles(path) {
 			} else {
         entry.on('data', noop); // otherwise unzip.Parse() will hang forever on this entry on some xlsx files
       }
-		});
+		})
+		.on('end', function(){
+			deferred.resolve();
+		})
 
-	when(all(_.pluck(files, 'deferred')), function() {
-		deferred.resolve(files);
-	});
+		when(all(_.pluck(files, 'deferred')), function() {
+			deferred.resolve(files);
+		});
 
 	return deferred.promise;
 }
@@ -71,9 +72,16 @@ function extractData(files) {
 	try {
 		var libxmljs = require('libxmljs'),
 			sheet = libxmljs.parseXml(files['xl/worksheets/sheet1.xml'].contents),
-			strings = libxmljs.parseXml(files['xl/sharedStrings.xml'].contents),
 			ns = {a: 'http://schemas.openxmlformats.org/spreadsheetml/2006/main'},
-			data = [];
+			data = [],
+			strings;
+      
+      // if excel file has no strings, sharedStrings won't exist
+      if (files['xl/sharedStrings.xml']){
+			  strings = libxmljs.parseXml(files['xl/sharedStrings.xml'].contents);
+			} else {
+        strings = false;
+      }
 	} catch(parseError){
 	   return [];
     	}
@@ -98,18 +106,22 @@ function extractData(files) {
 		this.column = colToInt(cell[0]);
 	};
 
-	var na = { value: function() { return ''; },
-        text:  function() { return ''; } };
+	var na = { 
+		value: function() { return ''; },
+    text:  function() { return ''; }
+  };
 
 	var Cell = function(cellNode) {
 		var r = cellNode.attr('r').value(),
 			type = (cellNode.attr('t') || na).value(),
 			value = (cellNode.get('a:v', ns) || na ).text(),
+			formula = (cellNode.get('a:f', ns) || na).text(),
 			coords = new CellCoords(r);
 
 		this.column = coords.column;
 		this.row = coords.row;
 		this.value = value;
+		this.formula = formula;
 		this.type = type;
 	};
 
@@ -135,13 +147,16 @@ function extractData(files) {
 	});
 
 	_.each(cells, function(cell) {
-		var value = cell.value;
+		var value = {
+			v: cell.value,
+			f: cell.formula
+		};
 
 		if (cell.type == 's') {
-			values = strings.find('//a:si[' + (parseInt(value) + 1) + ']//a:t[not(ancestor::a:rPh)]', ns)
-			value = "";
+			values = strings.find('//a:si[' + (parseInt(value.v) + 1) + ']//a:t[not(ancestor::a:rPh)]', ns)
+			value.v = "";
 			for (var i = 0; i < values.length; i++) {
-				value += values[i].text();
+				value.v += values[i].text();
 			}
 		}
 		
@@ -153,6 +168,7 @@ function extractData(files) {
 
 module.exports = function parseXlsx(path, cb) {
 	extractFiles(path).then(function(files) {
+		console.log(files);
 		cb(null, extractData(files));
 	},
 	function(err) {

@@ -1,2 +1,4 @@
 node_modules
 npm-debug.log
+test/spreadsheets/excel_mac_2008-formula-contents/
+test/spreadsheets/excel_mac_2011-basic-contents/
