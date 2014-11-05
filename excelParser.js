@@ -1,56 +1,33 @@
-var Promise = require('node-promise'),
-	defer = Promise.defer,
-	when = Promise.when,
-	all = Promise.all,
+var Promise = require('bluebird'),
 	_ = require('underscore');
 
-function extractFiles(path) {
-	var unzip = require('unzip'),
-		deferred = defer();
+function extractFiles(path,cb) {
+	var AdmZip = require('adm-zip');
   
   // desired files
 	var files = {
-		'xl/worksheets/sheet1.xml': {
-			deferred: defer()
-		},
-		'xl/sharedStrings.xml': {
-			deferred: defer()
-		}
+		'xl/worksheets/sheet1.xml': {},
+		'xl/sharedStrings.xml': {}
 	};
 
-  var noop = function () {};
-	
-	var srcStream = path instanceof require('stream') ?
-		path :
-		require('fs').createReadStream(path);
+  // reading archives
+  var zip = new AdmZip(path);
+  var zipEntries = zip.getEntries();
 
-	srcStream
-		.pipe(unzip.Parse())
-		.on('error', function(err) {
-			deferred.reject(err);
-		})
-		.on('entry', function(entry) {
-			if (files[entry.path]) {
-				var contents = '';
-				entry.on('data', function(data) {
-					contents += data.toString();
-				}).on('end', function() {
-					files[entry.path].contents = contents;
-					files[entry.path].deferred.resolve();
-				});
-			} else {
-        entry.on('data', noop); // otherwise unzip.Parse() will hang forever on this entry on some xlsx files
+  zipEntries.forEach(function(entry,i,c) {
+      if (files[entry.entryName]) {
+        files[entry.entryName].contents = zip.readAsText(entry);
       }
-		})
-		.on('end', function(){
-			deferred.resolve();
-		})
+  });
+  cb(files);
+}
 
-		when(all(_.pluck(files, 'deferred')), function() {
-			deferred.resolve(files);
+function extractFilesSync(path){
+	return new Promise(function(resolve,reject){
+		extractFiles(path,function(data){
+      resolve(data);
 		});
-
-	return deferred.promise;
+	});
 }
 
 function calculateDimensions (cells) {
@@ -68,7 +45,7 @@ function calculateDimensions (cells) {
     ];
 }
 
-function extractData(files) {
+function extractData(files,options) {
 	try {
 		var libxmljs = require('libxmljs'),
 			sheet = libxmljs.parseXml(files['xl/worksheets/sheet1.xml'].contents),
@@ -77,14 +54,15 @@ function extractData(files) {
 			strings;
       
       // if excel file has no strings, sharedStrings won't exist
-      if (files['xl/sharedStrings.xml']){
+      if (files['xl/sharedStrings.xml'].contents){
 			  strings = libxmljs.parseXml(files['xl/sharedStrings.xml'].contents);
 			} else {
         strings = false;
       }
+
 	} catch(parseError){
 	   return [];
-    	}
+  }
 
 	var colToInt = function(col) {
 		var letters = ["", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
@@ -145,33 +123,51 @@ function extractData(files) {
 		_(cols).times(function() { _row.push(''); });
 		data.push(_row);
 	});
+  
+  if (options.getAll) {
+  	_.each(cells, function(cell) {
+			var value = {
+				v: cell.value,
+				f: cell.formula
+			};
 
-	_.each(cells, function(cell) {
-		var value = {
-			v: cell.value,
-			f: cell.formula
-		};
-
-		if (cell.type == 's') {
-			values = strings.find('//a:si[' + (parseInt(value.v) + 1) + ']//a:t[not(ancestor::a:rPh)]', ns)
-			value.v = "";
-			for (var i = 0; i < values.length; i++) {
-				value.v += values[i].text();
+			if (cell.type == 's') {
+				values = strings.find('//a:si[' + (parseInt(value.v) + 1) + ']//a:t[not(ancestor::a:rPh)]', ns)
+				value.v = "";
+				for (var i = 0; i < values.length; i++) {
+					value.v += values[i].text();
+				}
 			}
-		}
-		
-		data[cell.row - d[0].row][cell.column - d[0].column] = value;
-	});
+			data[cell.row - d[0].row][cell.column - d[0].column] = value;
+		});
 
+  } else {
+		_.each(cells, function(cell) {
+			var value = cell.value
+
+			if (cell.type == 's') {
+				values = strings.find('//a:si[' + (parseInt(value) + 1) + ']//a:t[not(ancestor::a:rPh)]', ns)
+				value = "";
+				for (var i = 0; i < values.length; i++) {
+					value += values[i].text();
+				}
+			}
+			data[cell.row - d[0].row][cell.column - d[0].column] = value;
+		});
+	}
 	return data;
 }
 
 module.exports = function parseXlsx(path, cb) {
-	extractFiles(path).then(function(files) {
-		console.log(files);
-		cb(null, extractData(files));
-	},
-	function(err) {
-		cb(err);
-	});
+  extractFilesSync(path)
+		.then(function(files) {
+			cb(null, extractData(files,{getAll:false}));
+		});
+};
+
+module.exports.all = function all(path, cb) {
+  extractFilesSync(path)
+		.then(function(files) {
+			cb(null, extractData(files,{getAll:true}));
+		});
 };

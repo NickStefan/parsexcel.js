@@ -23,19 +23,13 @@ var sheets = {
     ]
 };
 
-// parseXlsx(sheetsDir + '/' + 'excel_mac_2008-numbers.xlsx', function(err, data) {
-//   console.log(data);
-//   console.log(err);
-// });
-
 describe('excel.js', function() {
   for (var filename in sheets) {
     (function(filename, expected) {
 
       describe(filename + ' basic test', function() {
         it('should return the right value', function(done) {
-          parseXlsx(sheetsDir + '/' + filename, function(err, data) {
-            console.log(data);
+          parseXlsx.all(sheetsDir + '/' + filename, function(err, data) {
             assert.deepEqual(data, expected);
             done(err);
           });
@@ -43,5 +37,27 @@ describe('excel.js', function() {
       });
 
     })(filename, sheets[filename]);
+  }
+});
+
+var sheetsOldApi = {
+  'excel_mac_2011-basic.xlsx': [ [ 'One', 'Two', '10','5','5'], [ 'Three', 'Four','','',''] ],
+  'excel_mac_2011-formatting.xlsx': [ [ 'Hey', 'now', 'so' ], [ 'cool', '', '' ] ]
+};
+
+describe('excel.js', function() {
+  for (var filename in sheetsOldApi) {
+    (function(filename, expected) {
+
+      describe(filename + ' basic test', function() {
+        it('should return the right value', function(done) {
+          parseXlsx(sheetsDir + '/' + filename, function(err, data) {
+            assert.deepEqual(data, expected);
+            done(err);
+          });
+        })
+      });
+
+    })(filename, sheetsOldApi[filename]);
   }
 });
