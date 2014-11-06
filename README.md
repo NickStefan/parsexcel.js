@@ -1,19 +1,19 @@
-Excel.js
+ParseXcel.js
 ========
 
-Native node.js Excel file parser. Only supports xlsx for now.
+Entire excel workbook parsed in native node.js. Get styles, forumulas, values, etc.
 
 Install
 =======
-    npm install excel
+    npm install ParseXcel.js
 
 Use
 ====
     var parseXlsx = require('excel');
 
-    parseXlsx('Spreadsheet.xlsx', function(err, data) {
+    parseXcel('Spreadsheet.xlsx', function(err, data) {
       if(err) throw err;
-        // data is an array of arrays
+        // data is an array of arrays of objects with cell properties
     });
     
 Test
@@ -22,4 +22,4 @@ Run `npm test`
 
 MIT License.
 
-**Thanks to [all other contributors](https://github.com/trevordixon/excel.js/graphs/contributors).**
+**Project was originally a fork of [excel.js](https://github.com/trevordixon/excel.js). Thank you to [trevordixon](https://github.com/trevordixon/) for the original inspiration.**
