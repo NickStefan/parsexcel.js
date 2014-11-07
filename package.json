@@ -10,7 +10,8 @@
     }
   ],
   "scripts": {
-    "test": "mocha --reporter list"
+    "test": "mocha --reporter list",
+    "inspect-xlsx": "bash test/unpackxlsx.sh"
   },
   "dependencies": {
     "adm-zip": "^0.4.4",

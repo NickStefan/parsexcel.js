@@ -9,7 +9,7 @@ Install
 
 Use
 ====
-    var parseXlsx = require('excel');
+    var parseXcel = require('excel');
 
     parseXcel('Spreadsheet.xlsx', function(err, data) {
       if(err) throw err;
@@ -19,6 +19,13 @@ Use
 Test
 =====
 Run `npm test`
+
+Inspect
+=======
+Inspect xml files inside of xlsx files with:
+`npm run inspect-xlsx`
+
+This will run a bash script to unzip the test folder xlsx files into xml files. Check the contents folders inside of the test/spreadsheets/ folder after running.
 
 MIT License.
 
