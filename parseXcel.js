@@ -4,12 +4,14 @@ var Promise = require('bluebird'),
 function extractFiles(path,cb) {
 	var AdmZip = require('adm-zip');
   
-  // desired files
+  // desired files in addition to sheets
 	var files = {
-		'xl/worksheets/sheet1.xml': {},
 		'xl/sharedStrings.xml': {},
-		'xl/styles.xml': {}
+		'xl/styles.xml': {},
+    'xl/workbook.xml':{},
+    sheets:{}
 	};
+  var sheets = {};
 
   // reading archives
   var zip = new AdmZip(path);
@@ -18,6 +20,9 @@ function extractFiles(path,cb) {
   zipEntries.forEach(function(entry,i,c) {
       if (files[entry.entryName]) {
         files[entry.entryName].contents = zip.readAsText(entry);
+      } else if (/xl\/worksheets\/sheet/.test(entry.entryName)) {
+        files.sheets[entry.entryName] = {};
+        files.sheets[entry.entryName].contents = zip.readAsText(entry);
       }
   });
   cb(files);
@@ -47,35 +52,42 @@ function calculateDimensions (cells) {
 }
 
 function extractData(files,options) {
-	try {
-		var libxmljs = require('libxmljs'),
-			sheet = libxmljs.parseXml(files['xl/worksheets/sheet1.xml'].contents),
-			ns = {a: 'http://schemas.openxmlformats.org/spreadsheetml/2006/main'},
-			data = [],
-			strings,
-			styles;
-      
-      // if excel file has no strings, sharedStrings won't exist
-      if (files['xl/sharedStrings.xml'].contents){
-			  strings = libxmljs.parseXml(files['xl/sharedStrings.xml'].contents);
-			} else {
-        strings = false;
-      }
-      
-      // if excel file has no styles, styles won't exist
-      if (files['xl/styles.xml'].contents){
-			  styles = libxmljs.parseXml(files['xl/styles.xml'].contents);
-			} else {
-        styles = false;
-      }
+	var libxmljs = require('libxmljs');
+  var sheets = {};
+	var ns = {a: 'http://schemas.openxmlformats.org/spreadsheetml/2006/main'};
+	var output = {};
+	var strings;
+	var styles;
 
-
-	} catch(parseError){
-	   return [];
-  }
+    for (var sheet in files.sheets){
+      // data to parse
+      sheets[sheet] = {};
+      sheets[sheet].data = libxmljs.parseXml(files.sheets[sheet].contents);
+      // output object to eventually return
+      output[sheet] = {};
+      output[sheet].data = [];
+    }
+    
+    // if excel file has no strings, sharedStrings won't exist
+    if (files['xl/sharedStrings.xml'].contents){
+		  strings = libxmljs.parseXml(files['xl/sharedStrings.xml'].contents);
+		} else {
+      strings = false;
+    }
+    
+    // if excel file has no styles, styles won't exist
+    if (files['xl/styles.xml'].contents){
+		  styles = libxmljs.parseXml(files['xl/styles.xml'].contents);
+		} else {
+      styles = false;
+    }
 
 	var colToInt = function(col) {
-		var letters = ["", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+		var letters = [
+      "", "A", "B", "C", "D", "E", "F", "G", 
+      "H", "I", "J", "K", "L", "M", "N", "O", "P",
+       "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
+    ];
 		col = col.trim().split('');
 		
 		var n = 0;
@@ -167,57 +179,65 @@ function extractData(files,options) {
     this.font = new Fonts(fontId);
     this.alignment = new Alignments(cellNode);
 	};
+  
+  _(sheets).each(function(v,k,c){
+    // get the sheet cells
+    sheets[k].cells = sheets[k].data.find('/a:worksheet/a:sheetData/a:row/a:c', ns)
+      .map(function(node){
+        return new Cell(node);
+      });
+    
+    // get the sheet dimensions
+    var d = sheets[k].data.get('//a:dimension/@ref', ns);
+    if (d) {
+      sheets[k].d = _.map(d.value().split(':'), function(v) { return new CellCoords(v); });
+    } else {
+      sheets[k].d = calculateDimensions(cells)
+    }
 
-	var cellNodes = sheet.find('/a:worksheet/a:sheetData/a:row/a:c', ns);
-	var cells = _(cellNodes).map(function (node) {
-		return new Cell(node);
-	});
+    var cols = sheets[k].d[1] ? sheets[k].d[1].column - sheets[k].d[0].column + 1 : 1;
+    var rows = sheets[k].d[1] ? sheets[k].d[1].row - sheets[k].d[0].row + 1 : 1;
+    
+    // add the number of array elements to match the sheet dimensions
+    _(rows).times(function() {
+      var _row = [];
+      _(cols).times(function() { _row.push(''); });
+      output[k].data.push(_row);
+    });
+  
+  });
 
   var cellStyles = styles.find('/a:styleSheet/a:cellXfs/a:xf', ns);
 	var styleMap = _(cellStyles).map(function (node) {
 		return new CellStyle(node);
 	});
-
-	var d = sheet.get('//a:dimension/@ref', ns);
-	if (d) {
-		d = _.map(d.value().split(':'), function(v) { return new CellCoords(v); });
-	} else {
-        d = calculateDimensions(cells)
-	}
-
-	var cols = d[1].column - d[0].column + 1,
-		rows = d[1].row - d[0].row + 1;
-
-	_(rows).times(function() {
-		var _row = [];
-		_(cols).times(function() { _row.push(''); });
-		data.push(_row);
-	});
   
-	_.each(cells, function(cell) {
-		var value = {
-			value: cell.value,
-			formula: cell.formula,
-			type: cell.type,
-			style: styleMap[0]
-		};
+	_(sheets).each(function(sheet,k,c) {
+    _(sheet.cells).each(function(cell){
+  		var value = {
+  			value: cell.value,
+  			formula: cell.formula,
+  			type: cell.type,
+  			style: styleMap[0]
+  		};
 
-		if (cell.type === 's') {
-			values = strings.find('//a:si[' + (parseInt(value.value) + 1) + ']//a:t[not(ancestor::a:rPh)]', ns)
-			value.value = "";
-			for (var i = 0; i < values.length; i++) {
-				value.value += values[i].text();
-			}
-			value.type = 'string';
-		}
-    
-		if (parseInt(cell.style) >= 0) {
-			value.style = styleMap[parseInt(cell.style)];
-		}
+  		if (cell.type === 's') {
+  			values = strings.find('//a:si[' + (parseInt(value.value) + 1) + ']//a:t[not(ancestor::a:rPh)]', ns)
+  			value.value = "";
+  			for (var i = 0; i < values.length; i++) {
+  				value.value += values[i].text();
+  			}
+  			value.type = 'string';
+  		}
+      
+  		if (parseInt(cell.style) >= 0) {
+  			value.style = styleMap[parseInt(cell.style)];
+  		}
 
-		data[cell.row - d[0].row][cell.column - d[0].column] = value;
+  		output[k].data[cell.row - sheet.d[0].row][cell.column - sheet.d[0].column] = value;
+    });
 	});
-	return data;
+	return output;
 }
 
 module.exports = function parseXcel(path, cb) {
