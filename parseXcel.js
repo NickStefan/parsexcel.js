@@ -3,12 +3,12 @@ var Promise = require('bluebird');
 var AdmZip = require('adm-zip');
 var libxmljs = require('libxmljs');
 
-var Cell = require('./cell');
-var CellCoords = require('./cellcoords');
-var CellStyle = require('./cellstyle');
-var calcSheetDimensions = require('./calcsheetdimensions');
-var ns = {a: 'http://schemas.openxmlformats.org/spreadsheetml/2006/main'};
-
+var CellStyle = require('./cellstyle/cellstyle');
+var Cell = require('./cell/cell');
+var CellCoords = require('./cell/cellcoords');
+var calcSheetDimensions = require('./cell/calcsheetdimensions');
+var jsDate = require('./cellstyle/jsdate');
+var ns = require('./cell/namespace');
 
 function extractFiles(path,cb) {
   // desired files in addition to sheets
@@ -78,6 +78,19 @@ function extractData(files) {
         position: node.attr('id').value().replace(/rId/,'')
       }
     });
+  
+  var wbEpoch;
+  
+  workbook.find('/a:workbook/a:workbookPr',ns)
+   .forEach(function(node){
+     var e1904 = node.attr('1904') ? node.attr('1904').value() : undefined;
+     var e1900 = node.attr('1900') ? node.attr('1900').value() : undefined;
+     if (e1904 !== undefined) {
+      wbEpoch = 1904;
+     } else if (e1900 !== undefined) {
+      wbEpoch = 1900;
+     }
+   });
     
 
   _(sheets).each(function(sheet,sheetName){
@@ -121,6 +134,10 @@ function extractData(files) {
   			style: styleMap[0]
   		};
 
+      if (parseInt(cell.style) >= 0) {
+        value.style = styleMap[parseInt(cell.style)];
+      }
+
   		if (cell.type === 's') {
   			values = strings.find('//a:si[' + (parseInt(value.value) + 1) + ']//a:t[not(ancestor::a:rPh)]', ns)
   			value.value = "";
@@ -128,11 +145,14 @@ function extractData(files) {
   				value.value += values[i].text();
   			}
   			value.type = 'string';
-  		}
-      
-  		if (parseInt(cell.style) >= 0) {
-  			value.style = styleMap[parseInt(cell.style)];
-  		}
+  		} else if (cell.type === 'b') {
+        value.type = 'boolean';
+      } else {
+        value.type = value.style.format.type;
+        if (value.type === 'date'){
+          value.value = jsDate(value.value, wbEpoch);
+        }
+      }
 
   		output[sheetFileName].data[cell.row - sheet.dimensions[0].row][cell.column - sheet.dimensions[0].column] = value;
     });

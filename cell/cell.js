@@ -1,6 +1,5 @@
 var CellCoords = require('./cellcoords');
-
-var ns = {a: 'http://schemas.openxmlformats.org/spreadsheetml/2006/main'};
+var ns = require('./namespace');
 var na = { 
   value: function() { return ''; },
   text:  function() { return ''; }

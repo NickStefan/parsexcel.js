@@ -8,34 +8,35 @@ describe('excel.js', function() {
   for (var filename in answers) {
     (function(filename, expected) {
     
-      if (filename === 'excel_mac_2008-numbers.xlsx'){
+      if (filename === 'excel_mac_2008-types.xlsx'){
         describe(filename + ' test', function() {
-          it('should return the right numbers and formatting', function(done) {
+          it('should return correct numbers, currencies, strings, booleans, and dates', function(done) {
             parseXcel(sheetsDir + '/' + filename, function(err, data) {
               console.log(JSON.stringify(data,null,2));
+              console.log(JSON.stringify(expected,null,2));
               assert.deepEqual(data, expected);
               done(err);
             });
           });
         });
         
-      } else if (filename === 'excel_mac_2008-formula.xlsx'){
+      } else if (filename === 'excel_mac_2008-formulas.xlsx'){
         describe(filename + ' basic test', function() {
-          it('should return the right formulas and formatting', function(done) {
+          it('should return the correct formulas', function(done) {
             parseXcel(sheetsDir + '/' + filename, function(err, data) {
-              console.log(JSON.stringify(data,null,2));
-              assert.deepEqual(data, expected);
+              //console.log(JSON.stringify(data,null,2));
+              assert.deepEqual(data, expected[filename]);
               done(err);
             });
           });
         });
 
-      } else if (filename === 'excel_mac_2011-formatting.xlsx'){
+      } else if (filename === 'excel_mac_2011-formats.xlsx'){
         describe(filename + ' test', function() {
-          it('should return the right formatting and multi-sheet workbook', function(done) {
+          it('should return the correct cell formatting and styles', function(done) {
             parseXcel(sheetsDir + '/' + filename, function(err, data) {
-              console.log(JSON.stringify(data,null,2));
-              assert.deepEqual(data, expected);
+              //console.log(JSON.stringify(data,null,2));
+              assert.deepEqual(data, expected[filename]);
               done(err);
             });
           });
