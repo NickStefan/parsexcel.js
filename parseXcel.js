@@ -80,7 +80,7 @@ function extractData(files) {
     });
   
   var wbEpoch;
-  
+
   workbook.find('/a:workbook/a:workbookPr',ns)
    .forEach(function(node){
      var e1904 = node.attr('1904') ? node.attr('1904').value() : undefined;
@@ -109,7 +109,7 @@ function extractData(files) {
     // add the number of array elements to match the sheet dimensions
     _(rows).times(function() {
       var _row = [];
-      _(cols).times(function() { _row.push(''); });
+      _(cols).times(function() { _row.push(' '); });
       output[sheetName].data.push(_row);
     });
   
@@ -140,7 +140,7 @@ function extractData(files) {
 
   		if (cell.type === 's') {
   			values = strings.find('//a:si[' + (parseInt(value.value) + 1) + ']//a:t[not(ancestor::a:rPh)]', ns)
-  			value.value = "";
+  			value.value = '';
   			for (var i = 0; i < values.length; i++) {
   				value.value += values[i].text();
   			}

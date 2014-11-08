@@ -8,7 +8,7 @@ var jsDate = function(days,epoch){
     startEpoch = moment('1904-1-1','YYYY-M-D');
   }
   var newDate = startEpoch.add(days,'days');
-  return newDate.toDate();
+  return newDate.toDate().toString();
 };
 
 module.exports = jsDate;
