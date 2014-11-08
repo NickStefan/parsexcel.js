@@ -1,4 +1,4 @@
-ParseXcel.js
+parsexcel.js
 ========
 
 Entire excel workbook parsed in native node.js.
@@ -11,14 +11,14 @@ Entire excel workbook parsed in native node.js.
 
 Install
 =======
-    npm install ParseXcel.js
+    npm install parsexcel.js
 
 Use
 ====
 ```
-var parseXcel = require('parseXcel');
+var parsexcel = require('parsexcel');
 
-parseXcel('Spreadsheet.xlsx', function(err, data) {
+parsexcel('Spreadsheet.xlsx', function(err, data) {
   if(err) throw err;
     // ... do stuff with data ...
     // data is an object -- see Output below for documentation
@@ -245,4 +245,4 @@ This will run a bash script to unzip the test folder xlsx files into xml files. 
 
 MIT License.
 
-**parseXcel.js was originally a fork of [excel.js](https://github.com/trevordixon/excel.js). It was re-released as a different project because the code base is almost 80% divergent from excel.js. I am however greatful for the dimensions calculations and the skeleton provided by the original repo. Thank you to [trevordixon](https://github.com/trevordixon/), and other contributors, for excel.js.**
+**parsexcel.js was originally a fork of [excel.js](https://github.com/trevordixon/excel.js). It was re-released as a different project because the code base is almost 80% divergent from excel.js. I am however greatful for the dimensions calculations and the skeleton provided by the original repo. Thank you to [trevordixon](https://github.com/trevordixon/), and other contributors, for excel.js.**

@@ -1,8 +1,8 @@
 {
-  "name": "parseXcel.js",
+  "name": "parsexcel.js",
   "version": "0.0.1",
   "description": "Parse entire excel workbooks in native node.js. Get cell styles, formats, formulas, and values.",
-  "main": "parseXcel.js",
+  "main": "parsexcel.js",
   "contributors": [
     {
       "name": "Trevor Dixon",
@@ -26,7 +26,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/nickstefan/parseXcel.js"
+    "url": "https://github.com/nickstefan/parsexcel.js"
   },
   "keywords": [
     "excel",

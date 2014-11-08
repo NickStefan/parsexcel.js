@@ -1,4 +1,4 @@
-var parseXcel = require('../parseXcel');
+var parseXcel = require('../parsexcel');
 var assert = require('assert');
 assert.deepEqualWithDifflet = require('deep-equal-with-difflet');
 var answers = require('./answers');
