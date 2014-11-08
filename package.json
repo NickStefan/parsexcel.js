@@ -1,7 +1,7 @@
 {
   "name": "parseXcel.js",
   "version": "0.0.1",
-  "description": "Parse entire excel workbooks in native node.js. Get ALL styles, css style formatting, cell formats, formulas, and values.",
+  "description": "Parse entire excel workbooks in native node.js. Get cell styles, formats, formulas, and values.",
   "main": "parseXcel.js",
   "contributors": [
     {
