@@ -20,7 +20,8 @@ var parseXcel = require('parseXcel');
 
 parseXcel('Spreadsheet.xlsx', function(err, data) {
   if(err) throw err;
-    // data is an array of arrays of objects with cell properties
+    // ... do stuff with data ...
+    // data is an object -- see Output below for documentation
 });
 ```
 
@@ -244,4 +245,4 @@ This will run a bash script to unzip the test folder xlsx files into xml files. 
 
 MIT License.
 
-**Project was originally a fork of [excel.js](https://github.com/trevordixon/excel.js). I decided to re-release as a new project after rewriting most of the repo. I am however greatful for the dimensions calculations and the skeleton provided by the original repo. Thank you to [trevordixon](https://github.com/trevordixon/) for excel.js.**
+**parseXcel.js was originally a fork of [excel.js](https://github.com/trevordixon/excel.js). It was re-released as a different project because the code base is almost 80% divergent from excel.js. I am however greatful for the dimensions calculations and the skeleton provided by the original repo. Thank you to [trevordixon](https://github.com/trevordixon/), and other contributors, for excel.js.**
