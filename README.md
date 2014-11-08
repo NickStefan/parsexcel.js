@@ -60,7 +60,7 @@ The cell object has value, formula, type, and style properties:
 {
   value: "5",
   formula: "",
-  type: "",
+  type: "general",
   style: { /* ... style object ... */}
 }
 ```
@@ -68,42 +68,60 @@ The cell object has value, formula, type, and style properties:
 Value is always represented as a string, but when read with the type property can represent a number of cell types:
 
 ##### Date
+```
 value: "Sun Oct 20 2002 00:00:00 GMT-0700 (PDT)",
 type: "date"
+```
 
 ##### String
+```
 value: "bob",
 type: "string"
+```
 
 ##### General
+```
 value: "5",
 type: "general"
+```
 
 ##### Number
+```
 value: "5",
 type: "number"
+```
 
 ##### Currency
+```
 value: "100.05",
 type: "currency"
+```
 
 ##### Boolean
+```
 value: "0",
 type: "boolean"
+```
 
 ##### Percent
+```
 value: "0.97499999999999998",
 type: "percent"
+```
 
 ### Value and Formula
 
 ##### Basic Formulas
+```
 value: "10",
 "formula": "SUM(B1:C1)"
+```
 
 ##### Multi Sheet Formulas
+```
 value: "bobfromsheet2",
 "formula": "Sheet2!A1"
+```
 
 ## CELL STYLE OBJECT
 
@@ -168,7 +186,7 @@ value: "bobfromsheet2",
 ```
 
 ## FORMAT OBJECT
-There are 180+ excel cell formats! I currently have an object look up for about 70 of them. The missing ones are either esoteric, eastern language, or very legacy.
+There are 180+ excel cell formats! There is currently an object look up for about 70 of them. The missing ones are either esoteric, eastern language, or very legacy.
 
 Here's a quick tour of the 5 types. Each type has many different supported string formats.
 
@@ -211,6 +229,8 @@ Here's a quick tour of the 5 types. Each type has many different supported strin
   "type": "date"
 }
 ```
+
+There are 65 other ones with different string formats that are not listed here, but can be found in /cellstyle/numformats.js
 
 Test
 =====
