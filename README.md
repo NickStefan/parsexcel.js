@@ -234,14 +234,13 @@ There are 65 other ones with different string formats that are not listed here, 
 
 Test
 =====
-Run `npm test`
+    npm test
 
-Inspect
+Inspect Excel's XML
 =======
-Inspect the xml files inside of the test/spreadsheets/*.xlsx files with:
-`npm run inspect-xlsx`
+    npm run inspect-xlsx      
 
-This will run a bash script to unzip the test folder xlsx files into xml files. Check the contents folders inside of the test/spreadsheets/ folder after running.
+This will run a bash script to unzip the test folder xlsx files into xml files. Editing a parsing library sometimes requires inspecting the XML files that you're trying to parse.
 
 MIT License.
 
