@@ -16,7 +16,7 @@ Install
 Use
 ====
 ```
-var parsexcel = require('parsexcel');
+var parsexcel = require('parsexcel.js');
 
 parsexcel('Spreadsheet.xlsx', function(err, data) {
   if(err) throw err;
