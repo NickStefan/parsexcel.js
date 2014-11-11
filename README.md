@@ -1,3 +1,5 @@
+[![NPM](https://nodei.co/npm/parsexcel.js.png)](https://nodei.co/npm/parsexcel.js/)
+
 parsexcel.js
 ========
 
