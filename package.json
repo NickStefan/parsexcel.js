@@ -1,6 +1,6 @@
 {
   "name": "parsexcel.js",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Parse entire excel workbooks in native node.js. Get cell styles, formats, formulas, and values.",
   "main": "parsexcel.js",
   "contributors": [
