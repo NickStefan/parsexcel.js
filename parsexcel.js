@@ -8,6 +8,7 @@ var Cell = require('./cell/cell');
 var CellCoords = require('./cell/cellcoords');
 var calcSheetDimensions = require('./cell/calcsheetdimensions');
 var jsDate = require('./cellstyle/jsdate');
+var htmlStyles = require('./cellstyle/htmlstyles.js');
 var ns = require('./cell/namespace');
 
 function extractFiles(path,cb) {
@@ -37,7 +38,7 @@ function extractFiles(path,cb) {
   cb(files);
 }
 
-function extractData(files) {
+function extractData(files,options) {
   var sheets = {};
 	var output = {};
 	var strings;
@@ -122,7 +123,12 @@ function extractData(files) {
 
   var styleMap = styles.find('/a:styleSheet/a:cellXfs/a:xf', ns)
 	  .map(function (node) {
-  		return new CellStyle(node,rawStyles);
+    	var rawCellStyle = new CellStyle(node,rawStyles);
+      if (options.htmlReady){
+        return new htmlStyles(rawCellStyle);
+      } else {
+        return rawCellStyle;
+      }
   	});
   
 	_(sheets).each(function(sheet,sheetFileName) {
@@ -175,9 +181,24 @@ function extractFilesSync(path){
   });
 }
 
-module.exports = function parseXcel(path, cb) {
+function parsexcel(path,options,cb) {
+  options = options || {};
   extractFilesSync(path)
-		.then(function(files) {
-			cb(null, extractData(files));
-		});
+    .then(function(files) {
+      cb(null, extractData(files,options));
+    });
 };
+
+module.exports = function(path,cb){
+  return parsexcel(path,null,cb);
+};
+
+module.exports.parseRaw = function(path,cb){
+  return parsexcel(path,null,cb);
+};
+
+module.exports.htmlReady = function(path,cb){
+  var options = {htmlReady: true};
+  return parsexcel(path,options,cb);
+};
+

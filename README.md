@@ -15,22 +15,23 @@ Install
 =======
     npm install parsexcel.js
 
-Use
-====
+
+parsexcel#htmlReady
+==================
 ```
 var parsexcel = require('parsexcel.js');
 
-parsexcel('Spreadsheet.xlsx', function(err, data) {
+parsexcel.htmlReady('Spreadsheet.xlsx', function(err, data) {
   if(err) throw err;
     // ... do stuff with data ...
     // data is an object -- see Output below for documentation
 });
 ```
 
-Output
-======
+parsexcel#htmlReady Output
+==================
 
-The output is one giant object. A full example results object example can be found in test/answers.js. Here is the breakdown from outtermost to inner most properties:
+The output is one giant object. Full example result objects example can be found in test/answers.js. Here is the breakdown from outtermost to inner most properties:
 
 ## WORKSHEETS:
 ```
@@ -125,6 +126,58 @@ value: "10",
 value: "bobfromsheet2",
 "formula": "Sheet2!A1"
 ```
+
+## CELL STYLE OBJECT
+
+Default values are empty strings: "". 
+Otherwise, raw excel styles are
+converted into something that can be easily added to a raw HTML node using camel cased javascript styles:
+
+```
+{
+  // borders
+  borderBottom: "", // example: thick solid
+  borderBottomColor: "", // example: #000000
+  borderTop: "",
+  borderTopColor: "",
+  borderRight: "",
+  borderRightColor: "",
+  borderLeft: "",
+  borderLeftColor: "",
+
+  // fill
+  backgroundColor: "", // example: #000000
+
+  // fonts
+  fontFamily: ""; // example: "sans-serif"
+  fontSize: "", // example: "12px"
+  color: "", // example: #000000
+  fontStyle: "", // example: "italic",
+  textDecoration: "", // example: "underline",
+  fontWeight: "", // example: "bold",
+
+  // alignment
+  verticalAlign: "", // example: "top-text"
+  textAlign: ""; // example: "middle"
+}
+```
+
+
+parsexcel#parseRaw
+====
+```
+var parsexcel = require('parsexcel.js');
+
+parsexcel.parseRaw('Spreadsheet.xlsx', function(err, data) {
+  if(err) throw err;
+    // ... do stuff with data ...
+    // data is an object -- see Output below for documentation
+});
+```
+
+parsexcel#parseRaw Output
+======
+This output is the exact same as the htmlReady output, except that the cell style object is closer to exactly what excel has stored:
 
 ## CELL STYLE OBJECT
 
@@ -234,6 +287,20 @@ Here's a quick tour of the 5 types. Each type has many different supported strin
 ```
 
 There are 65 other ones with different string formats that are not listed here, but can be found in /cellstyle/numformats.js
+
+
+Backwards Compatability
+=======================
+In order to maintain backwards compatability, the old API (which can currently be used with parsexcel.parseRaw() ) is still available as:
+```
+var parsexcel = require('parsexcel.js');
+
+parsexcel('Spreadsheet.xlsx', function(err, data) {
+  if(err) throw err;
+    // ... do stuff with data ...
+    // data is an object -- see parseRaw Output for documentation
+});
+```
 
 Test
 =====

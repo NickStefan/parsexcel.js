@@ -1,6 +1,936 @@
 var answers = {};
+answers.parseRaw = {};
 
-answers['excel_mac_2008-types.xlsx'] = {
+answers.htmlReady = {};
+
+answers.htmlReady['excel_mac_2011-formats.xlsx'] = {
+  "1": {
+    "data": [
+      [
+        {
+          "value": "bob",
+          "formula": "",
+          "type": "string",
+          "style": {
+            "borderBottom": "",
+            "borderBottomColor": "",
+            "borderTop": "",
+            "borderTopColor": "",
+            "borderRight": "",
+            "borderRightColor": "",
+            "borderLeft": "",
+            "borderLeftColor": "",
+            "fontFamily": "Calibri",
+            "fontSize": "12px",
+            "color": "",
+            "fontStyle": "",
+            "textDecoration": "",
+            "fontWeight": "",
+            "verticalAlign": "",
+            "textAlign": "",
+            "format": {
+              "string": "General",
+              "type": "general"
+            }
+          }
+        }
+      ]
+    ],
+    "sheetName": "Sheet1",
+    "sheetPosition": "1"
+  },
+  "2": {
+    "data": [
+      [
+        {
+          "value": "second sheet",
+          "formula": "",
+          "type": "string",
+          "style": {
+            "borderBottom": "",
+            "borderBottomColor": "",
+            "borderTop": "",
+            "borderTopColor": "",
+            "borderRight": "",
+            "borderRightColor": "",
+            "borderLeft": "",
+            "borderLeftColor": "",
+            "fontFamily": "Calibri",
+            "fontSize": "12px",
+            "color": "",
+            "fontStyle": "",
+            "textDecoration": "",
+            "fontWeight": "",
+            "verticalAlign": "",
+            "textAlign": "",
+            "format": {
+              "string": "General",
+              "type": "general"
+            }
+          }
+        }
+      ]
+    ],
+    "sheetName": "Sheet2",
+    "sheetPosition": "2"
+  },
+  "3": {
+    "data": [
+      [
+        {
+          "value": "Hey",
+          "formula": "",
+          "type": "string",
+          "style": {
+            "borderBottom": "",
+            "borderBottomColor": "",
+            "borderTop": "",
+            "borderTopColor": "",
+            "borderRight": "",
+            "borderRightColor": "",
+            "borderLeft": "",
+            "borderLeftColor": "",
+            "fontFamily": "Calibri",
+            "fontSize": "12px",
+            "color": "",
+            "fontStyle": "",
+            "textDecoration": "",
+            "fontWeight": "bold",
+            "verticalAlign": "",
+            "textAlign": "",
+            "format": {
+              "string": "General",
+              "type": "general"
+            }
+          }
+        },
+        {
+          "value": "red",
+          "formula": "",
+          "type": "string",
+          "style": {
+            "borderBottom": "thin solid",
+            "borderBottomColor": "#000000",
+            "borderTop": "thin solid",
+            "borderTopColor": "#000000",
+            "borderRight": "thin solid",
+            "borderRightColor": "#000000",
+            "borderLeft": "thin solid",
+            "borderLeftColor": "#000000",
+            "fontFamily": "Calibri",
+            "fontSize": "28px",
+            "color": "#FF0000",
+            "fontStyle": "",
+            "textDecoration": "",
+            "fontWeight": "",
+            "verticalAlign": "",
+            "textAlign": "",
+            "format": {
+              "string": "General",
+              "type": "general"
+            }
+          }
+        },
+        {
+          "value": "green centered and wrapped",
+          "formula": "",
+          "type": "string",
+          "style": {
+            "borderBottom": "",
+            "borderBottomColor": "",
+            "borderTop": "",
+            "borderTopColor": "",
+            "borderRight": "",
+            "borderRightColor": "",
+            "borderLeft": "",
+            "borderLeftColor": "",
+            "backgroundColor": "#99CC00",
+            "fontFamily": "Adobe Garamond Pro",
+            "fontSize": "12px",
+            "color": "#000000",
+            "fontStyle": "",
+            "textDecoration": "",
+            "fontWeight": "",
+            "verticalAlign": "middle",
+            "textAlign": "center",
+            "format": {
+              "string": "General",
+              "type": "general"
+            }
+          }
+        },
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        {
+          "value": "this far column",
+          "formula": "",
+          "type": "string",
+          "style": {
+            "borderBottom": "",
+            "borderBottomColor": "",
+            "borderTop": "",
+            "borderTopColor": "",
+            "borderRight": "",
+            "borderRightColor": "",
+            "borderLeft": "",
+            "borderLeftColor": "",
+            "fontFamily": "Calibri",
+            "fontSize": "12px",
+            "color": "",
+            "fontStyle": "",
+            "textDecoration": "",
+            "fontWeight": "",
+            "verticalAlign": "",
+            "textAlign": "",
+            "format": {
+              "string": "General",
+              "type": "general"
+            }
+          }
+        }
+      ],
+      [
+        {
+          "value": "cool",
+          "formula": "",
+          "type": "string",
+          "style": {
+            "borderBottom": "",
+            "borderBottomColor": "",
+            "borderTop": "",
+            "borderTopColor": "",
+            "borderRight": "",
+            "borderRightColor": "",
+            "borderLeft": "",
+            "borderLeftColor": "",
+            "fontFamily": "Calibri",
+            "fontSize": "12px",
+            "color": "",
+            "fontStyle": "",
+            "textDecoration": "underline",
+            "fontWeight": "",
+            "verticalAlign": "",
+            "textAlign": "",
+            "format": {
+              "string": "General",
+              "type": "general"
+            }
+          }
+        },
+        {
+          "value": "red",
+          "formula": "",
+          "type": "string",
+          "style": {
+            "borderBottom": "",
+            "borderBottomColor": "",
+            "borderTop": "",
+            "borderTopColor": "",
+            "borderRight": "",
+            "borderRightColor": "",
+            "borderLeft": "",
+            "borderLeftColor": "",
+            "fontFamily": "Calibri",
+            "fontSize": "12px",
+            "color": "#FF0000",
+            "fontStyle": "",
+            "textDecoration": "",
+            "fontWeight": "",
+            "verticalAlign": "",
+            "textAlign": "",
+            "format": {
+              "string": "General",
+              "type": "general"
+            }
+          }
+        },
+        {
+          "value": "blue",
+          "formula": "",
+          "type": "string",
+          "style": {
+            "borderBottom": "",
+            "borderBottomColor": "",
+            "borderTop": "",
+            "borderTopColor": "",
+            "borderRight": "",
+            "borderRightColor": "",
+            "borderLeft": "",
+            "borderLeftColor": "",
+            "fontFamily": "Calibri",
+            "fontSize": "12px",
+            "color": "#0000FF",
+            "fontStyle": "",
+            "textDecoration": "",
+            "fontWeight": "",
+            "verticalAlign": "",
+            "textAlign": "",
+            "format": {
+              "string": "General",
+              "type": "general"
+            }
+          }
+        },
+        {
+          "value": "yellow",
+          "formula": "",
+          "type": "string",
+          "style": {
+            "borderBottom": "",
+            "borderBottomColor": "",
+            "borderTop": "",
+            "borderTopColor": "",
+            "borderRight": "",
+            "borderRightColor": "",
+            "borderLeft": "",
+            "borderLeftColor": "",
+            "fontFamily": "Calibri",
+            "fontSize": "12px",
+            "color": "#FFFF00",
+            "fontStyle": "",
+            "textDecoration": "",
+            "fontWeight": "",
+            "verticalAlign": "",
+            "textAlign": "",
+            "format": {
+              "string": "General",
+              "type": "general"
+            }
+          }
+        },
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " "
+      ],
+      [
+        " ",
+        {
+          "value": "purple",
+          "formula": "",
+          "type": "string",
+          "style": {
+            "borderBottom": "",
+            "borderBottomColor": "",
+            "borderTop": "",
+            "borderTopColor": "",
+            "borderRight": "",
+            "borderRightColor": "",
+            "borderLeft": "",
+            "borderLeftColor": "",
+            "backgroundColor": "#CC99FF",
+            "fontFamily": "Calibri",
+            "fontSize": "12px",
+            "color": "",
+            "fontStyle": "",
+            "textDecoration": "",
+            "fontWeight": "",
+            "verticalAlign": "",
+            "textAlign": "",
+            "format": {
+              "string": "General",
+              "type": "general"
+            }
+          }
+        },
+        {
+          "value": "aqua",
+          "formula": "",
+          "type": "string",
+          "style": {
+            "borderBottom": "",
+            "borderBottomColor": "",
+            "borderTop": "",
+            "borderTopColor": "",
+            "borderRight": "",
+            "borderRightColor": "",
+            "borderLeft": "",
+            "borderLeftColor": "",
+            "fontFamily": "Calibri",
+            "fontSize": "12px",
+            "color": "#33CCCC",
+            "fontStyle": "",
+            "textDecoration": "",
+            "fontWeight": "",
+            "verticalAlign": "",
+            "textAlign": "",
+            "format": {
+              "string": "General",
+              "type": "general"
+            }
+          }
+        },
+        {
+          "value": "yellow on orange",
+          "formula": "",
+          "type": "string",
+          "style": {
+            "borderBottom": "",
+            "borderBottomColor": "",
+            "borderTop": "",
+            "borderTopColor": "",
+            "borderRight": "",
+            "borderRightColor": "",
+            "borderLeft": "",
+            "borderLeftColor": "",
+            "backgroundColor": "#FF9900",
+            "fontFamily": "Calibri",
+            "fontSize": "12px",
+            "color": "#FFFF00",
+            "fontStyle": "",
+            "textDecoration": "",
+            "fontWeight": "",
+            "verticalAlign": "",
+            "textAlign": "",
+            "format": {
+              "string": "General",
+              "type": "general"
+            }
+          }
+        },
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " "
+      ],
+      [
+        " ",
+        " ",
+        {
+          "value": "",
+          "formula": "",
+          "type": "general",
+          "style": {
+            "borderBottom": "",
+            "borderBottomColor": "",
+            "borderTop": "",
+            "borderTopColor": "",
+            "borderRight": "",
+            "borderRightColor": "",
+            "borderLeft": "",
+            "borderLeftColor": "",
+            "fontFamily": "Calibri",
+            "fontSize": "12px",
+            "color": "",
+            "fontStyle": "",
+            "textDecoration": "",
+            "fontWeight": "",
+            "verticalAlign": "",
+            "textAlign": "",
+            "format": {
+              "string": "General",
+              "type": "general"
+            }
+          }
+        },
+        {
+          "value": "",
+          "formula": "",
+          "type": "general",
+          "style": {
+            "borderBottom": "",
+            "borderBottomColor": "",
+            "borderTop": "",
+            "borderTopColor": "",
+            "borderRight": "",
+            "borderRightColor": "",
+            "borderLeft": "",
+            "borderLeftColor": "",
+            "fontFamily": "Calibri",
+            "fontSize": "12px",
+            "color": "",
+            "fontStyle": "",
+            "textDecoration": "",
+            "fontWeight": "",
+            "verticalAlign": "",
+            "textAlign": "",
+            "format": {
+              "string": "General",
+              "type": "general"
+            }
+          }
+        },
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " "
+      ],
+      [
+        " ",
+        {
+          "value": "fancy colors don’t work as well",
+          "formula": "",
+          "type": "string",
+          "style": {
+            "borderBottom": "",
+            "borderBottomColor": "",
+            "borderTop": "",
+            "borderTopColor": "",
+            "borderRight": "",
+            "borderRightColor": "",
+            "borderLeft": "",
+            "borderLeftColor": "",
+            "fontFamily": "Calibri",
+            "fontSize": "12px",
+            "color": "",
+            "fontStyle": "",
+            "textDecoration": "",
+            "fontWeight": "",
+            "verticalAlign": "",
+            "textAlign": "",
+            "format": {
+              "string": "General",
+              "type": "general"
+            }
+          }
+        },
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " "
+      ],
+      [
+        " ",
+        {
+          "value": "fancy red",
+          "formula": "",
+          "type": "string",
+          "style": {
+            "borderBottom": "",
+            "borderBottomColor": "",
+            "borderTop": "",
+            "borderTopColor": "",
+            "borderRight": "",
+            "borderRightColor": "",
+            "borderLeft": "",
+            "borderLeftColor": "",
+            "backgroundColor": "#993366",
+            "fontFamily": "Calibri",
+            "fontSize": "12px",
+            "color": "",
+            "fontStyle": "",
+            "textDecoration": "",
+            "fontWeight": "",
+            "verticalAlign": "",
+            "textAlign": "",
+            "format": {
+              "string": "General",
+              "type": "general"
+            }
+          }
+        },
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " "
+      ],
+      [
+        " ",
+        {
+          "value": "fancy orange",
+          "formula": "",
+          "type": "string",
+          "style": {
+            "borderBottom": "",
+            "borderBottomColor": "",
+            "borderTop": "",
+            "borderTopColor": "",
+            "borderRight": "",
+            "borderRightColor": "",
+            "borderLeft": "",
+            "borderLeftColor": "",
+            "backgroundColor": "#FF8080",
+            "fontFamily": "Calibri",
+            "fontSize": "12px",
+            "color": "",
+            "fontStyle": "",
+            "textDecoration": "",
+            "fontWeight": "",
+            "verticalAlign": "",
+            "textAlign": "",
+            "format": {
+              "string": "General",
+              "type": "general"
+            }
+          }
+        },
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " "
+      ],
+      [
+        " ",
+        {
+          "value": "fancy blue",
+          "formula": "",
+          "type": "string",
+          "style": {
+            "borderBottom": "",
+            "borderBottomColor": "",
+            "borderTop": "",
+            "borderTopColor": "",
+            "borderRight": "",
+            "borderRightColor": "",
+            "borderLeft": "",
+            "borderLeftColor": "",
+            "backgroundColor": "#9999FF",
+            "fontFamily": "Calibri",
+            "fontSize": "12px",
+            "color": "",
+            "fontStyle": "",
+            "textDecoration": "",
+            "fontWeight": "",
+            "verticalAlign": "",
+            "textAlign": "",
+            "format": {
+              "string": "General",
+              "type": "general"
+            }
+          }
+        },
+        " ",
+        {
+          "value": "bright green border",
+          "formula": "",
+          "type": "string",
+          "style": {
+            "borderBottom": "thick solid",
+            "borderBottomColor": "#00FF00",
+            "borderTop": "thick solid",
+            "borderTopColor": "#00FF00",
+            "borderRight": "thick solid",
+            "borderRightColor": "#00FF00",
+            "borderLeft": "thick solid",
+            "borderLeftColor": "#00FF00",
+            "fontFamily": "Calibri",
+            "fontSize": "12px",
+            "color": "",
+            "fontStyle": "",
+            "textDecoration": "",
+            "fontWeight": "",
+            "verticalAlign": "",
+            "textAlign": "",
+            "format": {
+              "string": "General",
+              "type": "general"
+            }
+          }
+        },
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " "
+      ],
+      [
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " "
+      ],
+      [
+        " ",
+        {
+          "value": "shading",
+          "formula": "",
+          "type": "string",
+          "style": {
+            "borderBottom": "",
+            "borderBottomColor": "",
+            "borderTop": "",
+            "borderTopColor": "",
+            "borderRight": "",
+            "borderRightColor": "",
+            "borderLeft": "",
+            "borderLeftColor": "",
+            "fontFamily": "Calibri",
+            "fontSize": "12px",
+            "color": "",
+            "fontStyle": "",
+            "textDecoration": "",
+            "fontWeight": "",
+            "verticalAlign": "",
+            "textAlign": "",
+            "format": {
+              "string": "General",
+              "type": "general"
+            }
+          }
+        },
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " "
+      ],
+      [
+        " ",
+        {
+          "value": "shaded",
+          "formula": "",
+          "type": "string",
+          "style": {
+            "borderBottom": "",
+            "borderBottomColor": "",
+            "borderTop": "",
+            "borderTopColor": "",
+            "borderRight": "",
+            "borderRightColor": "",
+            "borderLeft": "",
+            "borderLeftColor": "",
+            "backgroundColor": "#00FFFF",
+            "fontFamily": "Calibri",
+            "fontSize": "12px",
+            "color": "#000000",
+            "fontStyle": "",
+            "textDecoration": "",
+            "fontWeight": "",
+            "verticalAlign": "",
+            "textAlign": "",
+            "format": {
+              "string": "General",
+              "type": "general"
+            }
+          }
+        },
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " ",
+        " "
+      ]
+    ],
+    "sheetName": "first sheet",
+    "sheetPosition": "3"
+  }
+};
+
+
+
+answers.parseRaw['excel_mac_2008-types.xlsx'] = {
   "1": {
     "data": [
       [
@@ -580,7 +1510,7 @@ answers['excel_mac_2008-types.xlsx'] = {
   }
 };
 
-answers['excel_mac_2008-formulas.xlsx'] = {
+answers.parseRaw['excel_mac_2008-formulas.xlsx'] = {
   "1": {
     "data": [
       [
@@ -843,7 +1773,7 @@ answers['excel_mac_2008-formulas.xlsx'] = {
 };
 
 
-answers['excel_mac_2011-formats.xlsx'] = {
+answers.parseRaw['excel_mac_2011-formats.xlsx'] = {
   "1": {
     "data": [
       [
