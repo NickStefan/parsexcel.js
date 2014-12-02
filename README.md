@@ -157,10 +157,15 @@ converted into something that can be easily added to a raw HTML node using camel
   fontWeight: "", // example: "bold",
 
   // alignment
-  verticalAlign: "", // example: "top-text"
-  textAlign: ""; // example: "middle"
+  verticalAlign: "", // example: "top-text",
+  textAlign: ""; // example: "middle",
+  
+  // see the description of this object in parseRaw output
+  format: { /* ... format object */ ... }
 }
 ```
+
+
 
 
 parsexcel#parseRaw
