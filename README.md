@@ -1,4 +1,4 @@
-[![NPM](https://nodei.co/npm/parsexcel.js.png)](https://nodei.co/npm/parsexcel.js/)
+[![NPM](https://nodei.co/npm/parsexcel.js.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/parsexcel.js/)
 
 parsexcel.js
 ========
@@ -15,6 +15,7 @@ Install
 =======
     npm install parsexcel.js
 
+NOTE: 0.0.3 API still supported for now, despite the documented API for 0.1.0 being different. The 0.0.3 API still exists in the form of parsexcel.parseRaw(), and should be favored over invoking parsexcel() itself (as that will likely be deprecated in the future).
 
 parsexcel#htmlReady
 ==================
